@@ -1,6 +1,5 @@
 from django.db import models
-
-# Create your models here.
+from registration.models import Account
 
 
 class Player(models.Model):
@@ -9,3 +8,5 @@ class Player(models.Model):
     score = models.IntegerField(default=0, null=True)
     time_in = models.DateTimeField(auto_now_add=True, null=True)
     time_out = models.DateTimeField(auto_now=True, null=True)
+    last_updated_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name='player', null=True)
+

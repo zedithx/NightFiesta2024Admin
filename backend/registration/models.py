@@ -19,5 +19,4 @@ class Role(models.Model):
 
 class Account(User):
     role = models.ForeignKey(Role, on_delete=models.SET_NULL, related_name='account', null=True)
-    booth_no = models.CharField(db_column='booth number', blank=True, null=True)
     REQUIRED_FIELDS = ['username', 'role']
