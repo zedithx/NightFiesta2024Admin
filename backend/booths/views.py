@@ -4,6 +4,7 @@ from django.utils.functional import cached_property
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from . import serializers
@@ -25,6 +26,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 class BoothsView(viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
     pagination_class = StandardResultsSetPagination
     @action(detail=False, methods=["post"], url_path=r"add_points")
     def add_points(self, request, *args, **kwargs):
@@ -59,7 +61,7 @@ class BoothsView(viewsets.GenericViewSet):
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
 
-    @action(detail=False, methods=["get"], url_path=r"points_name")
+    @action(detail=False, methods=["post"], url_path=r"points_name")
     def points_name(self, request, *args, **kwargs):
         """return points and name and rank after querying by name. To be used as search filter for leaderboard
         on webpage"""
@@ -71,12 +73,13 @@ class BoothsView(viewsets.GenericViewSet):
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
 
-    @action(detail=False, methods=["get"], url_path=r"points_rfid")
+    @action(detail=False, methods=["post"], url_path=r"points_rfid")
     def points_rfid(self, request, *args, **kwargs):
         """return points and name and rank after querying by rfid. To be used at the booths if someone wants to check
         their points"""
         try:
             data = self.request.data
+            print(self.request.user)
             player = Player.objects.get(id=data.get('rfid'))
             result = serializers.PointSerializers(player).data
             return Response(result, status.HTTP_200_OK)
