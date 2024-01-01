@@ -54,8 +54,8 @@ class AccountView(viewsets.GenericViewSet):
                 access_token = refresh.access_token
 
                 return Response({
-                    'access_token': str(access_token),
-                    'refresh_token': str(refresh),
+                    'access': str(access_token),
+                    'refresh': str(refresh),
                 })
             else:
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)

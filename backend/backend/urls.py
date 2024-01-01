@@ -22,5 +22,6 @@ urlpatterns = [
     # path("admin/", admin.site.urls),
     path("booths/", include('booths.urls')),
     path("registration/", include('registration.urls')),
+    path('auth/', include('djoser.urls.jwt')),
 ]
 
