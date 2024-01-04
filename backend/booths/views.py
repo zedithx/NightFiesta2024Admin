@@ -42,6 +42,7 @@ class BoothsView(viewsets.GenericViewSet):
             # player.last_updated_by(self.request.user)
             # return serialized data of id and score
             result = serializers.PointSerializers(player).data
+            player.last_updated_by = self.request.user
             player.save()
             return Response(result, status=status.HTTP_200_OK)
 
@@ -79,13 +80,8 @@ class BoothsView(viewsets.GenericViewSet):
         their points"""
         try:
             data = self.request.data
-            print(self.request.user)
             player = Player.objects.get(id=data.get('rfid'))
             result = serializers.PointSerializers(player).data
             return Response(result, status.HTTP_200_OK)
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
-
-    @action(detail=False, methods=["get"], url_path=r"register_player")
-    def register_player(self, request, *args, **kwargs):
-        pass
