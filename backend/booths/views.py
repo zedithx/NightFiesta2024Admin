@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from . import serializers
-from .models import Player
+from .models import Player, Records
 
 
 class FasterDjangoPaginator(Paginator):
@@ -39,6 +39,8 @@ class BoothsView(viewsets.GenericViewSet):
             player = Player.objects.get(id=rfid)
             # add points
             player.score += points
+            record = Records.objects.create(score_added=points, game_master=self.request.user)
+            player.records.add(record)
             # player.last_updated_by(self.request.user)
             # return serialized data of id and score
             result = serializers.PointSerializers(player).data
