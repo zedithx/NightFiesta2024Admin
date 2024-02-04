@@ -39,9 +39,7 @@ class BoothsView(viewsets.GenericViewSet):
             player = Player.objects.get(id=rfid)
             # add points
             player.score += points
-            record = Records.objects.create(score_added=points, game_master=self.request.user)
-            player.records.add(record)
-            # player.last_updated_by(self.request.user)
+            Records.objects.create(player=player, score_added=points, game_master=self.request.user)
             # return serialized data of id and score
             result = serializers.PointSerializers(player).data
             player.last_updated_by = self.request.user
@@ -56,8 +54,7 @@ class BoothsView(viewsets.GenericViewSet):
         """return name, score and ranking of all players, with pagination"""
         try:
             players = Player.objects.all()
-            print(players)
-            players = players.order_by('score')
+            players = players.order_by('-score')
             pages = self.paginate_queryset(players)
             serialized = serializers.PointSerializers(pages, many=True, partial=True).data
             return self.get_paginated_response(serialized)
