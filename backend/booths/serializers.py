@@ -6,6 +6,7 @@ from .models import Player
 class PointSerializers(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ('name', 'score')
+        fields = ('id', 'name', 'score')
+
 
 

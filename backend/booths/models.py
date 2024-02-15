@@ -10,14 +10,24 @@ class Records(models.Model):
 
 
 class Player(models.Model):
-    ORGANIZATION_OPTIONS = (
-        ('SUTD', 'SUTD'),
-        ('Public', 'Public')
+    OCCUPATION_OPTIONS = (
+        ('SUTD Student', 'SUTD Student'),
+        ('SUTD Staff', 'SUTD Staff'),
+        ('Outside Student', 'Outside Student'),
+        ('NS', 'NS'),   # prospective students
+        ('Others', 'Others'),
+    )
+    EDUCATION_OPTIONS = (
+        ('Secondary', 'Secondary'),
+        ('Post-Secondary', 'Post-Secondary'),
+        ('University', 'University'),
+        ('Others', 'Others')
     )
     id = models.CharField(db_column='rfid', primary_key=True, blank=True)
     name = models.CharField(db_column='name', blank=True, null=True)
     score = models.IntegerField(default=0, null=True)
-    organization = models.CharField(db_column='organization', choices=ORGANIZATION_OPTIONS, max_length=50)
+    occupation = models.CharField(db_column='occupation', choices=OCCUPATION_OPTIONS, max_length=50)
+    education = models.CharField(db_column='education', choices=EDUCATION_OPTIONS, max_length=50, null=True, blank=True)
     time_in = models.DateTimeField(auto_now_add=True, null=True)
     time_out = models.DateTimeField(auto_now=True, null=True)
 

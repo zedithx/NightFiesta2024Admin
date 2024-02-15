@@ -2,7 +2,7 @@ import os
 import bcrypt
 import os
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -58,10 +58,19 @@ class AccountView(viewsets.GenericViewSet):
                 return Response({
                     'access': str(access_token),
                     'refresh': str(refresh),
-                    'is_staff': user.is_staff
+                    'is_staff': user.is_staff,
+                    'name': username
                 })
             else:
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response(e.args, status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=False, methods=['get'], url_path=r'logout_account')
+    def logout_account(self, request, *args, **kwargs):
+        try:
+            logout(request)
+            return Response({f"{request.user} has logged out successfully."}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
 
@@ -71,9 +80,13 @@ class AccountView(viewsets.GenericViewSet):
             data = self.request.data
             rfid = data.get('rfid')
             name = data.get('name')
-            organization = data.get('organization')
-            player = Player(id=rfid, name=name, organization=organization)
+            if data.get('education'):
+                education = data.get('education')
+            occupation = data.get('occupation')
+            player = Player(id=rfid, name=name, occupation=occupation)
+            if education:
+                player.education = education
             player.save()
-            return Response({'detail': f'Player {name} has been created by {request.user}.'}, status=status.HTTP_200_OK)
+            return Response({'detail': f'Player {name} with rfid number {rfid[:8]} has been created.'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
