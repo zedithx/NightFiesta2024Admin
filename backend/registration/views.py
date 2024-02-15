@@ -69,8 +69,9 @@ class AccountView(viewsets.GenericViewSet):
     @action(detail=False, methods=['get'], url_path=r'logout_account')
     def logout_account(self, request, *args, **kwargs):
         try:
+            name = request.user
             logout(request)
-            return Response({f"{request.user} has logged out successfully."}, status=status.HTTP_200_OK)
+            return Response({f"{name} has logged out successfully."}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
 
