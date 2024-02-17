@@ -11,6 +11,6 @@ class PointSerializers(serializers.ModelSerializer):
         fields = ('id', 'name', 'score')
         
     def get_id(self, obj):
-        return obj.id[:8]
+        return obj.id[-6:]
 
 

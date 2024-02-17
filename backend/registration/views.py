@@ -88,6 +88,6 @@ class AccountView(viewsets.GenericViewSet):
             if education:
                 player.education = education
             player.save()
-            return Response({'detail': f'Player {name} with rfid number {rfid[:8]} has been created.'}, status=status.HTTP_200_OK)
+            return Response({'detail': f'Player {name} with rfid number {rfid[-6:]} has been created.'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
