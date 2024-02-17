@@ -79,7 +79,7 @@ class BoothsView(viewsets.GenericViewSet):
         their points"""
         try:
             data = self.request.data
-            player = Player.objects.get(id__startswith=data.get('rfid'))
+            player = Player.objects.get(id__contains=data.get('rfid'))
             result = serializers.PointSerializers(player).data
             return Response(result, status.HTTP_200_OK)
         except Exception as e:
