@@ -81,12 +81,10 @@ class AccountView(viewsets.GenericViewSet):
             data = self.request.data
             rfid = data.get('rfid')
             name = data.get('name')
-            if data.get('education'):
-                education = data.get('education')
             occupation = data.get('occupation')
             player = Player(id=rfid, name=name, occupation=occupation)
-            if education:
-                player.education = education
+            if data.get('education'):
+                player.education = data.get('education')
             player.save()
             return Response({'detail': f'Player {name} with rfid number {rfid[-6:]} has been created.'}, status=status.HTTP_200_OK)
         except Exception as e:
