@@ -28,6 +28,7 @@ class Player(models.Model):
     score = models.IntegerField(default=0, null=True)
     occupation = models.CharField(db_column='occupation', choices=OCCUPATION_OPTIONS, max_length=50)
     education = models.CharField(db_column='education', choices=EDUCATION_OPTIONS, max_length=50, null=True, blank=True)
+    email = models.CharField(db_column='email', max_length=50, null=True, blank=True)
     time_in = models.DateTimeField(auto_now_add=True, null=True)
     time_out = models.DateTimeField(auto_now=True, null=True)
 
