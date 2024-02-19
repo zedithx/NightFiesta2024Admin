@@ -54,10 +54,10 @@ class BoothsView(viewsets.GenericViewSet):
         """return name, score and ranking of all players, with pagination"""
         try:
             players = Player.objects.all()
-            players = players.order_by('-score')
-            pages = self.paginate_queryset(players)
-            serialized = serializers.PointSerializers(pages, many=True, partial=True).data
-            return self.get_paginated_response(serialized)
+            players = players.order_by('-score')[:30]
+            # pages = self.paginate_queryset(players)
+            serialized = serializers.PointSerializers(players, many=True).data
+            return Response(serialized, status.HTTP_200_OK)
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
 
