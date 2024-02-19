@@ -49,7 +49,7 @@ class BoothsView(viewsets.GenericViewSet):
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
 
-    @action(detail=False, methods=["get"], url_path=r"leaderboard")
+    @action(detail=False, methods=["get"], url_path=r"leaderboard", permission_classes=[])
     def leaderboard(self, request, *args, **kwargs):
         """return name, score and ranking of all players, with pagination"""
         try:
@@ -61,7 +61,7 @@ class BoothsView(viewsets.GenericViewSet):
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
 
-    @action(detail=False, methods=["post"], url_path=r"points_name")
+    @action(detail=False, methods=["post"], url_path=r"points_name", permission_classes=[])
     def points_name(self, request, *args, **kwargs):
         """return points and name and rank after querying by name. To be used as search filter for leaderboard
         on webpage"""
@@ -73,7 +73,7 @@ class BoothsView(viewsets.GenericViewSet):
         except Exception as e:
             return Response(e.args, status=status.HTTP_404_NOT_FOUND)
 
-    @action(detail=False, methods=["post"], url_path=r"points_rfid")
+    @action(detail=False, methods=["post"], url_path=r"points_rfid", permission_classes=[])
     def points_rfid(self, request, *args, **kwargs):
         """return points and name and rank after querying by rfid. To be used at the booths if someone wants to check
         their points"""
