@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 from booths.models import Player
 
-POOL_NUMBER = 6
-WINNER_NUMBER = 3
+POOL_NUMBER = 30
+WINNER_NUMBER = 5
 
 
 def process_winners():
