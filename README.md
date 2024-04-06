@@ -6,6 +6,8 @@ an rfid wristband and register their name at the administrative booths. They can
 booths to gain points. There is a leaderboard on our main website showcasing the points of the people, intending to mimic
 a carnival styled event. All this is stored in supabase(postgresql), where the schema has been made using Django framework.
 
+Take note you need a supabase connection or change to sqlite for this to work. It should be stored in a .env file. Os.environ will get it from the dotenv file.
+
 # Installation
 First, cd to backend
 ```bash
@@ -27,6 +29,3 @@ If you would like to perform shell commands:
 ```bash
 python manage.py shell
 ```
-
-<u><h2>Frontend</h2></u><br>
-To be completed
